@@ -65,4 +65,9 @@ Install  net-tools and neofetch
 6. Mount the NAS *without* sudo
 > mount -a
 
-- This command will allow you to mount the 
+- This command will allow you to mount everything within the /etc/fstab file
+
+7. Install the qbittorrent-nox package. 
+> sudo apt install qbittorrent-nox 
+
+- This package is the point of this documentation. This is the package that runs the torrent server. The **-nox** piece is what installs the web browser portion.
