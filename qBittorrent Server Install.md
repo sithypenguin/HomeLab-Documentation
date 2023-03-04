@@ -125,7 +125,7 @@ Install  net-tools and neofetch
 
 13. First Login
 
-> 192.168.10.10:**8080***
+> 192.168.10.10:**8080**
 > Username: admin
 > password: adminadmin 
 
