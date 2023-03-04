@@ -68,6 +68,70 @@ Install  net-tools and neofetch
 - This command will allow you to mount everything within the /etc/fstab file
 
 7. Install the qbittorrent-nox package. 
+
 > sudo apt install qbittorrent-nox 
 
 - This package is the point of this documentation. This is the package that runs the torrent server. The **-nox** piece is what installs the web browser portion.
+
+8a. Start qbittorrent
+
+> qbittorrent-nox
+
+- This will start the service within the terminal window but as a process which means you would have to leave the terminal window open. We want to run this as a service so its running in the background, not the foreground
+
+8b. Run qbittorrent as a service
+> sudo nano /etc/systemd/system/qbittorrent.service
+> [Unit] 
+    Description=qBittorrent-nox service 
+    Wants=network-online.target 
+    After=network-online.target nss-lookup.target 
+
+    [Service] 
+    Type=exec 
+    Restart=always 
+    RestartSec=1 
+    User=pi 
+    UMask=0000 
+    ExecStart=/usr/bin/qbittorrent-nox 
+
+    [Install] 
+    WantedBy=multi-user.target 
+
+- Open/create the service file. Within that file enter the information above. Change the **User=** from pi to whatever the user is in your case
+
+9. Update the service manager to see the service that was just made
+
+> sudo systemctl daemon-reload
+
+- This allows that systemctl daemon to see the new service file that was just created and use it
+
+10. Start the service
+
+> sudo systemctl start qbittorrent
+
+- Starts the service so the terminal window can be closed down
+
+11. Confirm the service has started
+
+> sudo systemctl status qbittorrent
+
+- This will return the status of the service and if it is running or not. If it failed to run check the service file from step 8b and make sure there are no typos. 
+
+12. Enable the service to run on startup 
+
+> sudo systemctl enable qbittorrent
+
+- Enables the service to run on startup so you don't need to run the service everytime manually after a reboot
+
+13. First Login
+
+> 192.168.10.10:**8080***
+> Username: admin
+> password: adminadmin 
+
+ - On a web browser (localhost or another computer on the same network) type in the IP address of the server followed by the port. The password is admin twice with no space. Not a typo. I had to check my notes and online to be sure I didn't mess it up
+
+
+ ### At this point your qbittorrent server is setup and ready to go!
+
+ 
